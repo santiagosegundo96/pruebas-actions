@@ -5,5 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run:  bin/start --release
+      - name: Build docker images
+        run:  docker-compose build
+      - name: Setup Database
+        run: docker-compose run setup
+      - name: Run Tets
+        run: docker-compose run test
         
