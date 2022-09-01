@@ -1,14 +1,16 @@
 name: Pull Request
 on: [workflow_dispatch]
+env:
+  DOCKERFILE: docker-compose.release.yml
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build docker images
-        run:  docker-compose -f docker-compose.release.yml
+        run:  docker-compose -f $DOCKERFILE build
       - name: Setup Database
-        run: docker-compose run setup
+        run: docker-compose -f $DOCKERFILE run setup
       - name: Run Tets
-        run: docker-compose run test
+        run: docker-compose -f $DOCKERFILE run test
         
