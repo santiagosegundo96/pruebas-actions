@@ -3,7 +3,7 @@ env:
   POSTGRES_DB: rails_test
   POSTGRES_USER: rails
   POSTGRES_PASSWORD: password
-on: [workflow_dispatch]
+on: [workflow_dispatch, commit]
 jobs:
   test:
     runs-on: ubuntu-latest
