@@ -15,11 +15,8 @@ jobs:
         ports:
           - "5432:5432"
     env:
-      POSTGRES_DB: rails_test
-      POSTGRES_USER: rails
-      POSTGRES_PASSWORD: password
-      RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      POSTGRES_USER: {{ $env.DB_USER }}
+      POSTGRES_PASSWORD: {{ $env.PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -29,6 +26,8 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
       # Add or replace database setup steps here
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
       - name: Install dependencies
         run: |
           gem install bundler
