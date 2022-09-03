@@ -30,7 +30,6 @@ jobs:
           gem install bundler
           bundle install --jobs 4
           bin/rails db:setup
-# bundle exec rails db:prepare
           bundle exec rails test 
 
   lint:
