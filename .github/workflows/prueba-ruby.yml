@@ -13,12 +13,13 @@ jobs:
         image: postgres:14
         ports:
           - "5432:5432"
+        env:      
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_HOST: ${{ env.DB_HOST }}
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/cb_api_test"
-      DB_USER: ${{ env.DB_USER }}
-      DB_PASSWORD: ${{ env.DB_PASSWORD }}
-      DB_HOST: ${{ env.DB_HOST }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
