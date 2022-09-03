@@ -1,5 +1,11 @@
+env:
+  POSTGRES_DB: rails_test
+  POSTGRES_USER: rails
+  POSTGRES_PASSWORD: password
+
 name: Rails PR
-on: [push]
+on: [push] 
+#[workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -8,18 +14,22 @@ jobs:
         image: postgres:14
         ports:
           - "5432:5432"
-        env:
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+    env:
+      POSTGRES_DB: rails_test
+      POSTGRES_USER: rails
+      POSTGRES_PASSWORD: password
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      # Add or replace dependency steps here
       - name: Install Ruby and gems
         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-      - name: Install Postgres Client
-        run: sudo apt-get install libpq-dev
+      # Add or replace database setup steps here
       - name: Install dependencies
         run: |
           gem install bundler
