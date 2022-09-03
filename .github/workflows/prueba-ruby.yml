@@ -1,7 +1,7 @@
 env:
   POSTGRES_DB: rails_test
-  POSTGRES_USER: rails
-  POSTGRES_PASSWORD: password
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
 
 name: Rails PR
 on: [push]
@@ -16,9 +16,6 @@ jobs:
         env:      
           DB_USER: ${{ env.DB_USER }}
           DB_PASSWORD: ${{ env.DB_PASSWORD }}
-    env:
-      RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/cb_api_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,11 +23,24 @@ jobs:
         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-      - run: |
+      - name: Install postgres client
+        run: sudo apt-get install libpq-dev
+      - name: Install dependencies
+        run: |
           gem install bundler
-          bundle install --jobs 4
-          bin/rails db:create db:schema:load
-          bundle exec rails test 
+          bundler install
+      - name: Create database
+        run: |
+          bundler exec rails db:create RAILS_ENV=test
+          bundler exec rails db:migrate RAILS_ENV=test
+      - name: Run tests
+        run: bundler exec rpsec
+      - name: Upload coverage results    
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage
 
   lint:
     runs-on: ubuntu-latest
