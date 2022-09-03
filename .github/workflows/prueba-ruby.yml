@@ -15,7 +15,7 @@ jobs:
           - "5432:5432"
         env:      
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
         options: >-
           --mount type=tmpfs,destination=/var/lib/postgresql/data
