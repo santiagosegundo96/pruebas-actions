@@ -1,7 +1,8 @@
 env:
-  POSTGRES_DB: cb_api_test
+  # POSTGRES_DB: cb_api_test
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
+  RAILS_ENV: test
 
 name: Rails PR
 on: [push]
