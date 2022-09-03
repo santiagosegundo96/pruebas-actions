@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
-        run: |
+      - run: |
           sudo apt-get install libpq-dev
           gem install bundler
           bundle install --jobs 4 retry 3
