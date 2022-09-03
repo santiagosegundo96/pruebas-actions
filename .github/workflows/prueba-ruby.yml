@@ -1,11 +1,9 @@
+name: Rails PR
 env:
   POSTGRES_DB: rails_test
   POSTGRES_USER: rails
   POSTGRES_PASSWORD: password
-
-name: Rails PR
-on: 
-  [workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
