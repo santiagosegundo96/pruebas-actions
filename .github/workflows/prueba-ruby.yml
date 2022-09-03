@@ -28,9 +28,8 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
       - run: |
-          sudo apt-get install libpq-dev
           gem install bundler
-          bundle install --jobs 4 retry 3
+          bundle install --jobs 4
           bundle exec rails db:prepare
           bundle exec rails test 
 
