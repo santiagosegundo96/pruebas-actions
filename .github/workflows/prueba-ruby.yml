@@ -1,5 +1,5 @@
 env:
-  POSTGRES_DB: rails_test
+  POSTGRES_DB: postgres
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
 
