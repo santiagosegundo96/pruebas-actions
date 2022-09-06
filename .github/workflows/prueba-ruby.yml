@@ -1,4 +1,3 @@
-
 name: Rails PR
 on: [push]
 jobs:
@@ -7,12 +6,13 @@ jobs:
     services:
       postgres:
         image: postgres:14-alpine
-        ports:
-          - "5432:5432"
         env:      
+          POSTGRES_DB: test
           DB_USER: postgres
           DB_PASSWORD: postgres
           DB_HOST: localhost
+        ports:
+          - "5432:5432"
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     env:
       RAILS_ENV: test
@@ -30,10 +30,6 @@ jobs:
           bin/rails db:create
           bin/rails db:schema:load
           bundle exec rails test 
-        env:
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          DB_HOST: localhost
 
   lint:
     runs-on: ubuntu-latest
