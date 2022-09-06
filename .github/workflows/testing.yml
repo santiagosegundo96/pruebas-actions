@@ -47,4 +47,5 @@ jobs:
         DB_PASSWORD: postgres
         RAILS_ENV: test
       run: |
+        bundle install
         bundle exec rspec
