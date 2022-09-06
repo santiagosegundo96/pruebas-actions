@@ -26,7 +26,7 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
       - run: |
-          run: sudo apt-get install libpq-dev
+          sudo apt-get install libpq-dev
           gem install bundler
           bundle install --jobs 4 --retry 3
           bundle exec rake db:create
