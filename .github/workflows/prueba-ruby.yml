@@ -14,8 +14,9 @@ jobs:
         ports:
           - "5432:5432"
         env:      
-          DB_USER: ${{ env.DB_USER }}
-          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_USER: ${{ env.POSTGRES_USER }}
+          DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          DB_HOST: ${{ env.POSTGRES_DB }}
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/cb_api_test"
