@@ -6,7 +6,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres-14
+        image: postgres:14-alpine
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -19,7 +19,7 @@ jobs:
           - 5432:5432
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa
       with:
