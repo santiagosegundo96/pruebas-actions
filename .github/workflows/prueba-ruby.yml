@@ -1,7 +1,7 @@
 env:
   POSTGRES_DB: rails_test
-  POSTGRES_USER: rails
-  POSTGRES_PASSWORD: password
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
 
 name: Rails PR
 on: [push]
@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:14
-        ports:
-          - "5432:5432"
+        image: postgres:14-alpine
         env:      
           DB_USER: ${{ env.POSTGRES_USER }}
           DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
-          DB_HOST: ${{ env.POSTGRES_DB }}
+          DB_HOST: localhost
+        ports:
+          - "5432:5432"
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     env:
       RAILS_ENV: test
-      DATABASE_URL: "postgres://rails:password@localhost:5432/cb_api_test"
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,9 +28,11 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
       - run: |
+          run: sudo apt-get install libpq-dev
           gem install bundler
-          bundle install --jobs 4
-          bin/rails db:setup
+          bundle install --jobs 4 --retry 3
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
           bundle exec rails test 
 
   lint:
