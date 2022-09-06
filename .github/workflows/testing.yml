@@ -37,6 +37,7 @@ jobs:
         DB_PASSWORD: postgres
         RAILS_ENV: test
       run: |
+        bin/rails db:migrate
         bin/rails db:setup
 
     - name: Run Tests
