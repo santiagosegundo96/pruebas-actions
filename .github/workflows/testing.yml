@@ -48,4 +48,5 @@ jobs:
         RAILS_ENV: test
       run: |
         bundle install
-        bundle exec rspec
+        bundle exec rails test 
+        # bundle exec rspec
