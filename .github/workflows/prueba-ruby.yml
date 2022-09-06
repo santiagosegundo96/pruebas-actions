@@ -1,47 +1,47 @@
-name: Rails PR
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:14-alpine
-        env:      
-          POSTGRES_DB: test
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          DB_HOST: localhost
-        ports:
-          - "5432:5432"
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    env:
-      RAILS_ENV: test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
-      - run: |
-          sudo apt-get install libpq-dev
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          bin/rails db:create
-          bin/rails db:schema:load
-          bundle exec rails test 
+# name: Rails PR
+# on: [push]
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     services:
+#       postgres:
+#         image: postgres:14-alpine
+#         env:      
+#           POSTGRES_DB: test
+#           DB_USER: postgres
+#           DB_PASSWORD: postgres
+#           DB_HOST: localhost
+#         ports:
+#           - "5432:5432"
+#         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+#     env:
+#       RAILS_ENV: test
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#       - name: Install Ruby and gems
+#         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+#         with:
+#           ruby-version: ${{ env.RUBY_VERSION }}
+#       - run: |
+#           sudo apt-get install libpq-dev
+#           gem install bundler
+#           bundle install --jobs 4 --retry 3
+#           bin/rails db:create
+#           bin/rails db:schema:load
+#           bundle exec rails test 
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
-        with:
-          ruby-version: ${{ env.RUBY_VERSION }}
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#       - name: Install Ruby and gems
+#         uses: ruby/setup-ruby@0a29871fe2b0200a17a4497bae54fe5df0d973aa # v1.115.3
+#         with:
+#           ruby-version: ${{ env.RUBY_VERSION }}
           
-      - name: Install Rubocop
-        run: gem install rubocop
-      - name: Security audit application code
-        run: rubocop
+#       - name: Install Rubocop
+#         run: gem install rubocop
+#       - name: Security audit application code
+#         run: rubocop
