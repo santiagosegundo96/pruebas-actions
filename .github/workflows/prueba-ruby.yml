@@ -1,8 +1,3 @@
-env:
-  POSTGRES_DB: rails_test
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
-
 name: Rails PR
 on: [push]
 jobs:
@@ -12,6 +7,9 @@ jobs:
       postgres:
         image: postgres:14-alpine
         env:      
+          POSTGRES_DB: cb_api_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           DB_USER: ${{ env.POSTGRES_USER }}
           DB_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           DB_HOST: localhost
